@@ -2,25 +2,15 @@ package eu.senla.repositories;
 
 import eu.senla.api.data.RequestDataStorage;
 import eu.senla.api.repositories.RequestRepository;
-import eu.senla.data.RequestDataStorageImpl;
 import eu.senla.model.entities.Book;
 import eu.senla.model.entities.Request;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class RequestRepositoryImpl extends AbstractRepositoryImpl<Request> implements RequestRepository {
-    private static RequestRepository instance;
-    private static RequestDataStorage requestDataStorage;
-
-    public RequestRepositoryImpl(){
-        super(RequestDataStorageImpl.getInstance());
-        requestDataStorage = (RequestDataStorage) abstractDataStorage;
-    }
-
-    public static RequestRepository getInstance() {
-        if(instance == null){
-            instance = new RequestRepositoryImpl();
-        }
-        return instance;
-    }
+    @Autowired
+    private RequestDataStorage requestDataStorage;
 
     @Override
     public void deleteRequestsByBook(Book book) {

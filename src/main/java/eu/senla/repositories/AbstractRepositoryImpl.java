@@ -2,17 +2,16 @@ package eu.senla.repositories;
 
 import eu.senla.api.data.AbstractDataStorage;
 import eu.senla.api.repositories.AbstractRepository;
+import eu.senla.data.AbstractDataStorageImpl;
 import eu.senla.exceptions.EntityNotFoundException;
 import eu.senla.model.entities.BaseEntity;
 
 import java.util.List;
 
-public class AbstractRepositoryImpl<T extends BaseEntity> implements AbstractRepository<T> {
-    protected AbstractDataStorage<T> abstractDataStorage;
 
-    public AbstractRepositoryImpl(AbstractDataStorage<T> dataStorage){
-        abstractDataStorage = dataStorage;
-    }
+public class AbstractRepositoryImpl<T extends BaseEntity> implements AbstractRepository<T> {
+
+    protected AbstractDataStorage<T> abstractDataStorage = new AbstractDataStorageImpl<>();
 
     @Override
     public void create(T entity) {

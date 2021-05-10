@@ -2,31 +2,19 @@ package eu.senla.services;
 
 import eu.senla.api.repositories.BookRepository;
 import eu.senla.api.services.BookService;
-import eu.senla.exceptions.EntityNotFoundException;
 import eu.senla.model.entities.Book;
 import eu.senla.model.enums.sort.BookSortType;
-import eu.senla.repositories.BookRepositoryImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class BookServiceImpl extends AbstractServiceImpl<Book> implements BookService {
-    private static BookService instance;
-    private final BookRepository bookRepository;
-
-    public BookServiceImpl() {
-        super(BookRepositoryImpl.getInstance());
-        bookRepository = (BookRepository) abstractRepository;
-    }
-
-    public static BookService getInstance() {
-        if(instance == null){
-            instance = new BookServiceImpl();
-        }
-        return instance;
-    }
-
+    @Autowired
+    private BookRepository bookRepository;
 
     @Override
     public List<Book> getSortedBooks(BookSortType sortType) {

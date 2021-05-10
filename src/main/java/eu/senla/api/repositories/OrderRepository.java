@@ -1,6 +1,5 @@
 package eu.senla.api.repositories;
 
-import eu.senla.model.entities.Book;
 import eu.senla.model.entities.Order;
 
 import java.util.List;

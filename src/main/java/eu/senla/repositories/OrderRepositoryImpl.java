@@ -2,29 +2,18 @@ package eu.senla.repositories;
 
 import eu.senla.api.data.OrderDataStorage;
 import eu.senla.api.repositories.OrderRepository;
-import eu.senla.data.OrderDataStorageImpl;
-import eu.senla.model.entities.Book;
 import eu.senla.model.entities.Order;
 import eu.senla.model.enums.status.OrderStatus;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Repository
 public class OrderRepositoryImpl extends AbstractRepositoryImpl<Order> implements OrderRepository {
-    private static OrderRepository instance;
-    private static OrderDataStorage orderDataStorage;
-
-    public OrderRepositoryImpl(){
-        super(OrderDataStorageImpl.getInstance());
-        orderDataStorage = (OrderDataStorage) abstractDataStorage;
-    }
-
-    public static OrderRepository getInstance() {
-        if(instance == null){
-            instance = new OrderRepositoryImpl();
-        }
-        return instance;
-    }
+    @Autowired
+    private OrderDataStorage orderDataStorage;
 
     @Override
     public List<Order> getCompletedOrders() {

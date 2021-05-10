@@ -5,25 +5,16 @@ import eu.senla.exceptions.EntityNotFoundException;
 import eu.senla.model.entities.Book;
 import eu.senla.model.enums.sort.BookSortType;
 import eu.senla.model.enums.status.BookStatus;
-import eu.senla.services.BookServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Controller
 public class BookController {
-    private static BookController instance;
-    private static BookService bookService;
-
-    public BookController(){
-        bookService = BookServiceImpl.getInstance();
-    }
-
-    public static BookController getInstance() {
-        if(instance == null){
-            instance = new BookController();
-        }
-        return instance;
-    }
+    @Autowired
+    private BookService bookService;
 
     public void createBook(String name, BookStatus status, LocalDate publicationDate,
                            LocalDate deliveryDate, double price, String description) {

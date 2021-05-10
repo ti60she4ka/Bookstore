@@ -4,24 +4,15 @@ import eu.senla.api.services.RequestService;
 import eu.senla.exceptions.EntityNotFoundException;
 import eu.senla.model.entities.Book;
 import eu.senla.model.entities.Request;
-import eu.senla.services.RequestServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
+@Controller
 public class RequestController {
-    private static RequestController instance;
-    private final RequestService requestService;
-
-    public RequestController() {
-        requestService = RequestServiceImpl.getInstance();
-    }
-
-    public static RequestController getInstance() {
-        if(instance == null){
-            instance = new RequestController();
-        }
-        return instance;
-    }
+    @Autowired
+    private RequestService requestService;
 
     public void createRequest(Book book){
         Request request = new Request(book);

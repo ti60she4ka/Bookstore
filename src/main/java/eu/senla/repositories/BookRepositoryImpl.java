@@ -2,28 +2,18 @@ package eu.senla.repositories;
 
 import eu.senla.api.data.BookDataStorage;
 import eu.senla.api.repositories.BookRepository;
-import eu.senla.data.BookDataStorageImpl;
 import eu.senla.model.entities.Book;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Repository
 public class BookRepositoryImpl extends AbstractRepositoryImpl<Book> implements BookRepository {
-    private static BookRepository instance;
-    private static BookDataStorage bookDataStorage;
-
-    public BookRepositoryImpl(){
-        super(BookDataStorageImpl.getInstance());
-        bookDataStorage = (BookDataStorage) abstractDataStorage;
-    }
-
-    public static BookRepository getInstance() {
-        if(instance == null){
-            instance = new BookRepositoryImpl();
-        }
-        return instance;
-    }
+    @Autowired
+    private BookDataStorage bookDataStorage;
 
     @Override
     public List<Book> getStaleBooks() {

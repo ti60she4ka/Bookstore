@@ -6,25 +6,16 @@ import eu.senla.model.entities.Book;
 import eu.senla.model.entities.Customer;
 import eu.senla.model.entities.Order;
 import eu.senla.model.enums.sort.OrderSortType;
-import eu.senla.services.OrderServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Controller
 public class OrderController {
-    private static OrderController instance;
-    private static OrderService orderService;
-
-    public OrderController() {
-        orderService = OrderServiceImpl.getInstance();
-    }
-
-    public static OrderController getInstance() {
-        if(instance == null){
-            instance = new OrderController();
-        }
-        return instance;
-    }
+    @Autowired
+    private OrderService orderService;
 
     public void createOrder(List<Book> books, Customer customer){
         Order order = new Order(books, customer);

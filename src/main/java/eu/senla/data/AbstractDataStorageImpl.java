@@ -3,10 +3,11 @@ package eu.senla.data;
 import eu.senla.api.data.AbstractDataStorage;
 import eu.senla.model.entities.BaseEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AbstractDataStorageImpl<T extends BaseEntity> implements AbstractDataStorage<T> {
-    private List<T> entities;
+    private List<T> entities = new ArrayList<>();
     private long entityIdSequence;
 
     @Override

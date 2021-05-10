@@ -2,31 +2,20 @@ package eu.senla.services;
 
 import eu.senla.api.repositories.OrderRepository;
 import eu.senla.api.services.OrderService;
-import eu.senla.exceptions.EntityNotFoundException;
 import eu.senla.model.entities.Order;
 import eu.senla.model.enums.sort.OrderSortType;
-import eu.senla.repositories.OrderRepositoryImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class OrderServiceImpl extends AbstractServiceImpl<Order> implements OrderService {
-    private static OrderService instance;
-    private static OrderRepository orderRepository;
-
-    public OrderServiceImpl() {
-        super(OrderRepositoryImpl.getInstance());
-        orderRepository = (OrderRepository) abstractRepository;
-    }
-
-    public static OrderService getInstance() {
-        if(instance == null){
-            instance = new OrderServiceImpl();
-        }
-        return instance;
-    }
+    @Autowired
+    private OrderRepository orderRepository;
 
     @Override
     public List<Order> getSortedOrders(OrderSortType sortType) {

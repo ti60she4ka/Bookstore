@@ -1,10 +1,18 @@
 package eu.senla.exceptions;
 
-public class EntityNotFoundException extends Exception{
-    public EntityNotFoundException(int id){
-        super("Could not find entity with ID = " + id);
-    }
-    public EntityNotFoundException(String message){
-        super(message);
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+import java.util.function.Supplier;
+
+@AllArgsConstructor
+@Getter
+public class EntityNotFoundException extends Exception {
+    String entityType;
+    Long id;
+
+    @Override
+    public String getMessage() {
+        return "Entity was not found for the specified parameters";
     }
 }

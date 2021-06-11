@@ -1,16 +1,37 @@
 package eu.senla.model.entities;
 
 import eu.senla.model.enums.status.BookStatus;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
+@Entity
+@NoArgsConstructor
+@Getter
+@Setter
 public class Book extends BaseEntity{
     private String name;
+
+    @Enumerated(EnumType.STRING)
     private BookStatus status;
+
     private LocalDate publicationDate;
     private LocalDate deliveryDate;
     private Double price;
     private String description;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    List<Request> requests = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    List<Booking> bookings = new ArrayList<>();
 
     public Book(String name, BookStatus status, LocalDate publicationDate,
                 LocalDate deliveryDate, double price, String description) {
@@ -19,54 +40,6 @@ public class Book extends BaseEntity{
         this.publicationDate = publicationDate;
         this.deliveryDate = deliveryDate;
         this.price = price;
-        this.description = description;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public BookStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(BookStatus status) {
-        this.status = status;
-    }
-
-    public LocalDate getPublicationDate() {
-        return publicationDate;
-    }
-
-    public void setPublicationDate(LocalDate publicationDate) {
-        this.publicationDate = publicationDate;
-    }
-
-    public LocalDate getDeliveryDate() {
-        return deliveryDate;
-    }
-
-    public void setDeliveryDate(LocalDate deliveryDate) {
-        this.deliveryDate = deliveryDate;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
         this.description = description;
     }
 

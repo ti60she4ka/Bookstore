@@ -1,45 +1,53 @@
 package eu.senla.controllers;
 
 import eu.senla.api.services.RequestService;
+import eu.senla.controllers.response.ResponseBody;
+import eu.senla.dto.RequestDto;
 import eu.senla.exceptions.EntityNotFoundException;
 import eu.senla.model.entities.Book;
 import eu.senla.model.entities.Request;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("requests")
 public class RequestController {
     @Autowired
     private RequestService requestService;
 
-    public void createRequest(Book book){
-        Request request = new Request(book);
-        createRequest(request);
+    @PostMapping("create")
+    public ResponseEntity<RequestDto> createRequest(@RequestBody Request request){
+        return new ResponseEntity<>(requestService.create(request), HttpStatus.OK);
     }
 
-    public void createRequest(Request request){
-        requestService.create(request);
-    }
-
-    public void updateRequest(Request request){
+    @PutMapping
+    public ResponseEntity<?> updateRequest(Request request) throws EntityNotFoundException {
         requestService.update(request);
+        return ResponseBody.successOperation();
     }
 
-    public void deleteRequest(int id) throws EntityNotFoundException {
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteRequest(@PathVariable Long id) throws EntityNotFoundException {
         requestService.delete(id);
+        return ResponseBody.successOperation();
     }
 
-    public Request getRequest(int id) throws EntityNotFoundException {
-        return requestService.get(id);
+    @GetMapping("{id}")
+    public ResponseEntity<RequestDto> getRequest(@PathVariable Long id) throws EntityNotFoundException {
+        return new ResponseEntity<>(requestService.get(id), HttpStatus.OK);
     }
 
-    public List<Request> getRequests(){
-        return requestService.getAll();
+    @GetMapping()
+    public ResponseEntity<List<RequestDto>> getRequests(){
+        return new ResponseEntity<>(requestService.getAll(), HttpStatus.OK);
     }
 
-    public void deleteRequestsByBook(Book book){
+    public ResponseEntity<?> deleteRequestsByBook(Book book){
         requestService.deleteRequestsByBook(book);
+        return ResponseBody.successOperation();
     }
 }

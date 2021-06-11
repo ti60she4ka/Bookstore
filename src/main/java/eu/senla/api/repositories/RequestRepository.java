@@ -1,8 +1,11 @@
 package eu.senla.api.repositories;
 
-import eu.senla.model.entities.Book;
 import eu.senla.model.entities.Request;
+import org.springframework.data.repository.CrudRepository;
 
-public interface RequestRepository extends AbstractRepository<Request>{
-    void deleteRequestsByBook(Book book);
+import java.util.List;
+
+public interface RequestRepository extends CrudRepository<Request, Long> {
+    //void deleteRequestsByBook(Book book);
+    List<Request> findAll();
 }
